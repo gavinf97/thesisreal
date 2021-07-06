@@ -1,0 +1,118 @@
+# An example of runniung` MultiQC in a snakemake workflow.
+
+#alt allow download and temp bins for cloud running large batch process, maybe parse data file of accessions
+
+#define input sample names, must contain PE fastq files in directory
+SAMPS = ["ERR011087"]
+NUMBERS = ["1","2"]
+
+#0. Rule all defines what to look for and will use rules until gets them
+rule all:
+    input:
+        expand("data/fastqc/{sample}/{sample}_{no}_fastqc.html", sample=SAMPS,no=NUMBERS),
+        expand("data/multiqc/{sample}/multiqc_report.html", sample=SAMPS),
+        expand("data/bb_trimmed/{sample}_{no}.fastq", sample=SAMPS,no=NUMBERS),
+        expand("data/fastqc/{sample}_trimmed/{sample}_{no}_fastqc.html", sample=SAMPS,no=NUMBERS),
+        expand("data/multiqc/{sample}_trimmed/multiqc_report.html", sample=SAMPS),
+        expand("data/contigs/{sample}/final.contigs.fa", sample=SAMPS)
+
+##alt allow download and temp bins for cloud running large batch process, maybe parse data file of accessions
+
+#1. Run fastqc on raw data
+rule fastqc: 
+    input: 
+        expand(["sample_fastq/{sample}/{sample}_1.fastq",
+                 "sample_fastq/{sample}/{sample}_2.fastq"], sample=SAMPS)
+    output: 
+        expand(["data/fastqc/{sample}/{sample}_1_fastqc.html",
+                "data/fastqc/{sample}/{sample}_2_fastqc.html"], sample=SAMPS),
+        fastqc_outdir=directory(expand("data/fastqc/{sample}", sample=SAMPS))
+
+    conda: 
+        "config.yml"
+    #params: 
+     #   threads = "8"
+    shell:
+        "fastqc -o {output.fastqc_outdir} -t 8 {input}"
+
+#2. Run multiqc to summarise x no. fastqc reports to one html
+rule multiqc: 
+    input:
+        expand(["data/fastqc/{sample}/{sample}_1_fastqc.html",
+                "data/fastqc/{sample}/{sample}_2_fastqc.html"], sample=SAMPS)
+    output:
+        expand("data/multiqc/{sample}/multiqc_report.html", sample=SAMPS),
+        multi_outdir=directory(expand("data/multiqc/{sample}", sample=SAMPS))
+    conda: 
+        "config.yml"
+    shell: 
+        "multiqc data/fastqc -o {output.multi_outdir}"
+
+#alt pairing reads if suitable
+#3. Run BBduk to phred quality trim files at phred 15
+##mayneed to sample specific label folder and carry through for contigs
+rule bbduk:
+    input:
+        rawforward=expand("sample_fastq/{sample}/{sample}_1.fastq", sample=SAMPS),
+        rawreverse=expand("sample_fastq/{sample}/{sample}_2.fastq", sample=SAMPS)
+	
+    output:
+        trim_forward=expand("data/bb_trimmed/{sample}_1.fastq", sample=SAMPS),
+        trim_reverse=expand("data/bb_trimmed/{sample}_2.fastq", sample=SAMPS)
+#could set up phred param input here
+    shell:
+        "bbduk.sh in1={input.rawforward} in2={input.rawreverse} out1={output.trim_forward} out2={output.trim_reverse} qtrim=rl trimq=15"
+        
+#4. Run fastqc on trimmed data
+rule fastqc_trimmed: 
+    input: 
+        expand(["data/bb_trimmed/{sample}_1.fastq",
+                 "data/bb_trimmed/{sample}_2.fastq"], sample=SAMPS)
+    output: 
+        expand(["data/fastqc/{sample}_trimmed/{sample}_1_fastqc.html",
+                "data/fastqc/{sample}_trimmed/{sample}_2_fastqc.html"], sample=SAMPS),
+        fastqc_trim_outdir=directory(expand("data/fastqc/{sample}_trimmed", sample=SAMPS))
+
+    conda: 
+        "config.yml"
+    #params: 
+     #   threads = "8"
+    shell:
+        "fastqc -o {output.fastqc_trim_outdir} -t 8 {input}"
+
+#5. Run multiqc on trimmed data
+rule multiqc_trimmed:
+    input:
+        expand(["data/fastqc/{sample}_trimmed/{sample}_1_fastqc.html",
+                "data/fastqc/{sample}_trimmed/{sample}_2_fastqc.html"], sample=SAMPS)
+    output:
+        expand("data/multiqc/{sample}_trimmed/multiqc_report.html", sample=SAMPS),
+        multi_trim_outdir=directory(expand("data/multiqc/{sample}_trimmed", sample=SAMPS))
+    conda: 
+        "config.yml"
+#concious of general data/fastqc for mutliqc may amalgamate wrong reports, looks ok for now tho, maybe fix and specificy which folders for each mutlqic
+    shell: 
+        "multiqc data/fastqc -o {output.multi_trim_outdir}"
+
+
+#6. Form contigs w/ trimmed data
+rule megahit_contigs:
+    input:
+        forward_trimmed=expand("data/bb_trimmed/{sample}_1.fastq", sample=SAMPS),
+        reverse_trimmed=expand("data/bb_trimmed/{sample}_2.fastq", sample=SAMPS)
+    output:
+        expand("data/contigs/{sample}/final.contigs.fa", sample=SAMPS),
+        contigs_outdir=directory(expand("data/contigs/{sample}", sample=SAMPS))
+    conda:
+        "config.yml"
+    shell:
+        "megahit -f -1 {input.forward_trimmed} -2 {input.reverse_trimmed} -o {output.contigs_outdir}"
+
+#7. Run antismash/others for BGCs in contigs
+#alt: analyse contigs species ect Kraken/etc
+#alt: metaspades contigs + metaspades BGC detect software
+#alt: scaffolding bin software
+#8. Run BWA and Samtools to make bams
+#9. Run metabat binning
+#10. Run antisash on bins
+

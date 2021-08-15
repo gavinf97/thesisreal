@@ -26,7 +26,7 @@
 ### Nextflow: MetaSpades Pipeline (available)
 
 ## 2. Bash - File Management (unavailable)
-//
+<br />
 ## 3. Python - File Parsing (unavailable)
 
 ## 4. R - Graphing Data (unavailable)

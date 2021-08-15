@@ -1,6 +1,6 @@
 # Thesis Github: Gavin Farrell
 ## Updated: 15/8/21 
-## Status; being updated, to be complete before Friday 20th; files listed as available/unavailable until uploaded
+## Status; being updated, to be complete before 17/8/21
 -> Contact g.farrell13@nuigalway.ie for any specific files or details before then
 
 

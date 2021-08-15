@@ -12,7 +12,8 @@
 #### Accession: PRJEB12449
 
 
-### Dockerhub container used
+### Dockerhub container used at: https://hub.docker.com/repository/docker/gfarrell/allin
+### Requires updating as mix of conda environment and singularity (docker base) container used for pipelines
 
 ### List of tools used
 

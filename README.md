@@ -6,7 +6,7 @@
 
 ## Title: Is the a Loss of BGC Diveristy in Colorectal Microbiome
 
-## 0. ADditional files
+## 0. Additional files
 ### Sample Accessions and Status
 #### Avaiable on ENA at: PREBJ...
 

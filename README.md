@@ -27,7 +27,7 @@
 ### Nextflow: MetaSpades Pipeline (available)
 <br />
 
-## 2. Bash - File Management (unavailable)
+## 2. Bash - File Management (available)
 <br />
 
 ## 3. Python - File Parsing (unavailable)

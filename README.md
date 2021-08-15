@@ -8,7 +8,8 @@
 
 ## 0. Additional files
 ### Sample Accessions and Status
-#### Avaiable on ENA at: PREBJ...
+#### Avaiable on ENA at: https://www.ebi.ac.uk/ena/browser/view/PRJEB12449?show=reads
+#### Accession: PRJEB12449
 
 
 ### Dockerhub container used

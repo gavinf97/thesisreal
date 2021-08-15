@@ -26,10 +26,13 @@
 ### Nextflow: Megahit Pipeline (available)
 ### Nextflow: MetaSpades Pipeline (available)
 <br />
+
 ## 2. Bash - File Management (unavailable)
 <br />
+
 ## 3. Python - File Parsing (unavailable)
 <br />
+
 ## 4. R - Graphing Data (unavailable)
 
 

@@ -30,7 +30,7 @@
 ## 2. Bash - File Management (available)
 <br />
 
-## 3. Python - File Parsing (unavailable)
+## 3. Python - File Parsing (available)
 <br />
 
 ## 4. R - Graphing Data (unavailable)

@@ -1,0 +1,110 @@
+---
+title: "final totals boxplots"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#Normalised Data
+
+#Read in file
+library(readr)
+normalised_totals_finals_quant <- read_csv("~/thesis/python_r/1final_data/normalised_totals_finals_quant.csv")
+normalised_totals_finals_quant
+attach(normalised_totals_finals_quant)
+
+boxplot(n_Mega8_CRC_BGC,n_Mega8_Norm_BGC,n_Scaff30_CRC_BGC,n_Scaff30_Norm_BGC,n_Gclust44_CRC_BGC,n_Gclust44_Norm_BGC,n_Biosyn44_CRC_BGC
+,n_Biosyn44_Norm_BGC,
+outline=FALSE)
+
+#1. Mega8
+boxplot(n_Mega8_CRC_BGC,n_Mega8_Norm_BGC, 
+        main = "Normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+#2. Scaff30
+boxplot(n_Scaff30_CRC_BGC,n_Scaff30_Norm_BGC, 
+        main = "Normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+#3. Gcluster44
+boxplot(n_Gclust44_CRC_BGC,n_Gclust44_Norm_BGC, 
+        main = "Normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+#4. Biosyn44
+boxplot(n_Biosyn44_CRC_BGC,n_Biosyn44_Norm_BGC, 
+        main = "Normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+
+
+#boxplots total 4 v 4 within (1v1s)
+#boxplot(ozone, ozone_norm, temp, temp_norm,
+#at = c(1,2,4,5),
+#las = 2,
+#border = "brown",
+#horizontal = TRUE,
+#notch = TRUE
+#)
+#!!!!!!NB CAREFUL OUTLINE
+```
+```{r}
+#Non-normalised data (singles)
+
+#Read in file
+library(readr)
+totals_finals_quant <- read_csv("~/thesis/python_r/1final_data/totals_finals_quant.csv")
+totals_finals_quant
+attach(totals_finals_quant)
+
+#1. Mega8
+boxplot(Mega8_CRC_BGC,Mega8_Norm_BGC, 
+        main = "Non-normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+#2. Scaff30
+boxplot(Scaff30_CRC_BGC,Scaff30_Norm_BGC, 
+        main = "Non-normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+#3. Gcluster44
+boxplot(Gclust44_CRC_BGC,Gclust44_Norm_BGC, 
+        main = "Non-normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+#4. Biosyn44
+boxplot(Biosyn44_CRC_BGC,Biosyn44_Norm_BGC, 
+        main = "Non-normalised BGC Counts",
+        names = c("CRC", "Normal"),
+        col = c("red","blue"),
+        xlab = 'Patient Status',
+        ylab = 'Number of BGCs',
+        outline=FALSE)
+
+```
+

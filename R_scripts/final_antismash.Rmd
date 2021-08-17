@@ -1,0 +1,154 @@
+---
+title: "antismash_final_wrangle"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+############################
+#1. Parsing and cleaning tsv#
+############################
+
+#reads in raw python tsv and clean up
+#!!!Rename input file!!!
+antismash_bgcs <- read.table(file = '~/thesis/python_r/1final_data/30scaff_work_files/crc_scaffolds_unified_30.output.tsv', sep = '\t')
+antismash_bgcs
+
+#counts families and groups them from raw tsv
+families_present <- antismash_bgcs %>% count(V2)
+families_present
+
+#orders by count family data from high to low
+ordered_families <- families_present %>% arrange(desc(n))
+ordered_families
+
+#cleans the ordered data and column names
+clean <- ordered_families %>% rename(Cluster_type = V2, Cluster_count = n)
+clean
+
+#writes new tsv to an output tsv for use in graphing section
+#!!!Rename output file!!!
+  #tsv type
+  #write.table(clean, file='~/thesis/python_r/1final_data/30scaff_work_files/normal_scaffolds_unified_30_processed.tsv', quote=FALSE, sep='\t', col.names = NA)
+#csv type
+write.table(clean, file='~/thesis/python_r/1final_data/30scaff_work_files/crc_scaffolds_unified_30_processed.csv', quote=FALSE, sep=',', col.names = NA)
+```
+
+```{r}
+#################################
+#1.5. Merge crc and normal tsvs #
+################################
+#crc in
+crc_csv <- read.csv(file = '~/thesis/python_r/1final_data/30scaff_work_files/crc_scaffolds_unified_30_processed.csv', sep = ',')
+crc_csv
+#normal in
+normal_csv <- read.csv(file = '~/thesis/python_r/1final_data/30scaff_work_files/normal_scaffolds_unified_30_processed.csv', sep = ',')
+normal_csv
+
+#rename crc category column 1
+crc_3col_csv <- crc_csv %>% rename('CRC_or_Normal' = 'X')
+crc_3col_csv
+#rename normal category column 1
+normal_3col_csv <- normal_csv %>% rename('CRC_or_Normal' = 'X')
+normal_3col_csv
+
+  #set up replacement vector to match number of bgc typpes by count
+  ##count <- nrow(crc_3col_csv)
+  ##count_vec <- rep(c('Normal'),each=count)
+
+
+#add all values in col 1 to CRC
+crc_3col_csv$CRC_or_Normal <- "CRC"
+crc_3col_csv
+#add all values in col 1 to Normal
+normal_3col_csv$CRC_or_Normal <- "Normal"
+normal_3col_csv
+
+##crc_3col_csv$CRC_or_Normal <- count_vec
+##ready_normal_csv <- crc_3col_csv$CRC_or_Normal <- count_vec
+
+#crc_3col_tsv <- add_column(crc_tsv, CRC_or_Normal = 'CRC', .before = "Cluster_type")
+#add normal category column
+#normal_3col_tsv <- add_column(normal_tsv, CRC_or_Normal = 'Normal', .before = "Cluster_type")
+
+#merge both to usable for graphing
+#merged_tsv <- merge(crc_3col_csv, normal_3col_csv, by = c('Cluster_type','CRC_or_Normal')) #, 'Cluster_count'))
+
+merged_tsv <- rbind(crc_3col_csv, normal_3col_csv)
+merged_tsv
+
+#write to new tsv
+write.table(merged_tsv, file='~/thesis/python_r/1final_data/30scaff_work_files/30scaff_readygraph.csv', quote=FALSE, sep=',', col.names = NA)
+```
+
+
+```{r}
+
+######################
+#2. Graphing clean tsv#
+######################
+#2.1 Bar plots
+
+#load libares to graph
+library(dplyr)
+library(ggplot2)
+
+#read in clean tsv data
+#!!!Rename input file!!! (input from csv direct)
+#g <- read.csv("~/thesis/python_r/1final_data/xxxxx.csv")[1:3]
+
+#direct input from above
+g <- merged_tsv
+g
+
+
+#graphing in colour
+#red and blue 
+
+rb <- ggplot(g, aes(x = Cluster_type, y=Cluster_count, fill=CRC_or_Normal)) +
+  geom_col(data = g, aes(y = Cluster_count, fill = CRC_or_Normal), 
+              position = position_dodge(preserve = "single"), width =0.8) +
+  scale_y_continuous(breaks = seq(0,800, by = 100), expand=c(0,0)) +
+  scale_fill_manual(values = c("#eb3f36", "#3062e3"), name = "Patient Status") +
+  scale_x_discrete(expand=c(0,0)) +
+   ggtitle("MetasSpades Scaffolding BGCs") +
+  xlab("BGC Type") +
+  ylab("BGC Count") +
+  
+theme(
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.x = element_text(size=10, margin = margin(t = -15, r = 0, b = 0, l = 0)),
+        axis.text.x = element_text(angle=45, vjust = 1.05, hjust = 1, size = 5),
+        axis.text.y = element_text(size=7),
+        axis.title.y = element_text(size=10),
+        legend.text = element_text(size=10),
+        legend.key.size = unit(0.8,"line"),
+        legend.title = element_text(size = 12),
+        legend.position = c(0.9,0.9),
+        panel.background = element_blank(),
+        #panel.grid.major.y = element_line(size = 0.3, linetype = 'solid', colour = "white"),
+        panel.ontop = TRUE,
+       ) +
+
+theme(axis.line.x = element_line(color="black", size = 0.25),
+        axis.line.y = element_line(color="black", size = 0.25))
+
+rb
+
+ggsave("rb.png", device = "png")
+
+
+```
+```{r}
+#2.2 Pie charts
+
+#2.3 Clear distibution chart of values
+
+```
+
+
+

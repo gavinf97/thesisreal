@@ -1,0 +1,30 @@
+---
+title: "anti_processing"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+#!!!Rename input file!!!
+antismash_bgcs <- read.table(file = '44gcluster_work_files/44_normal_gcluster_merged.output.tsv', sep = '\t')
+antismash_bgcs
+attach(antismash_bgcs)
+families_present <- antismash_bgcs %>% count(V2)
+families_present
+#families_present_normal10 <- distinct(data.frame(antismash_bgcs_crc$V2))
+#write.table(families_present_crc10, file='crc_10families.tsv', quote=FALSE, sep='\t', col.names = NA)
+#pie(families_present_crc10$n, labels = families_present_crc10$V2)
+```
+
+```{r}
+ordered_families <- families_present %>% arrange(desc(n))
+ordered_families
+clean <- ordered_families %>% rename(Cluster_type = V2, Cluster_count = n)
+clean
+#!!!Rename output file!!!
+write.table(clean, file='44gcluster_work_files/44_normal_gcluster_merged_processed.tsv', quote=FALSE, sep='\t', col.names = NA)
+```

@@ -1,0 +1,39 @@
+---
+title: "parse namesusable"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+#load in needed library to parse data
+library(readr)
+
+#read in Vogtmann full sample metadata csv
+vogtmann <- read_csv("hoe/user/vogtmann.csv")
+```
+
+```{r}
+#parse out data from csv data
+names <- vogtmann[, c(1, 3)]
+names
+```
+
+
+```{r}
+#set up usable data from csv
+t(status)
+attach(names)
+
+#order data by status
+newdata <- names[order(reported_primary_diagnosis),]
+newdata 
+
+#write data to csv for later use (CRC vs Normal)
+write.csv(newdata[c(1:48),], file = "vogtman_crc.csv")
+write.csv(newdata[c(49:100),], file = "vogtman_normal.csv")
+```
+

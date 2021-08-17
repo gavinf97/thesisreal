@@ -1,0 +1,180 @@
+---
+title: "normalisation"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#normalisation graphing
+
+```{r}
+#1. Read in csv
+
+library(readr)
+#MAYBE CHAGE INPUT FOR MODIFIED ONE (ERXs VS ERR)
+mega8_count_data <- read.csv("mega8_count_data.csv")
+mega8_count_data
+#View(mega8_count_data)
+
+#1.2?change file format for graph?...
+
+
+#Simple t-test chck differences
+#1.3 Reads diff
+x = mega8_count_data$CRC_Reads
+y = mega8_count_data$NORM_Reads
+t.test(x,y)
+
+#1.4 BGCs diff non-normalised
+x = mega8_count_data$CRC_BGCs
+y = mega8_count_data$NORM_BGCs
+t.test(x,y)
+
+#1.5 BGCs diff normalised
+x = mega8_count_data$CRC_normalised_BGCs
+y = mega8_count_data$NORM_normalised_BGCs
+t.test(x,y)
+```
+
+```{r}
+library(ggplot2)
+attach(mega8_count_data)
+#Barcharts Non-Normalised
+#2.1. CRC
+#Plot Barchart Reads of Samples (maybe include BGC Reads no. on them)
+crc_reads_non_normal <-ggplot(mega8_count_data, aes(x=CRC_Sample, y=CRC_Reads)) +
+  geom_bar(stat="identity",fill='red') +
+  geom_text(aes(label=CRC_BGCs), vjust=-0.3, size=3.5)+
+  ggtitle("Megahit CRC Read Count") +
+  xlab("Sample Accession") +
+  ylab("Number of Reads")
+crc_reads_non_normal
+#ggsave("crc_reads_non_normal.png", device = "png")
+#Plot Barchart BGCs of Samples
+crc_bgc_non_normal <-ggplot(mega8_count_data, aes(x=CRC_Sample, y=CRC_BGCs)) +
+  geom_bar(stat="identity",fill='red') +
+  geom_text(aes(label=CRC_Reads), vjust=-0.3, size=3.5)+
+  ggtitle("Megahit CRC BGC Count") +
+  xlab("Sample Accession") +
+  ylab("Number of BGCs")
+crc_bgc_non_normal
+ggsave("crc_bgc_non_normal.png", device = "png")
+#Plot Barchart BGCs of Samples !Normalised Values!
+crc_bgc_normal <-ggplot(mega8_count_data, aes(x=CRC_Sample, y=CRC_normalised_BGCs)) +
+  geom_bar(stat="identity",fill='red') +
+  geom_text(aes(label='10k'), vjust=-0.3, size=3.5)+
+  ggtitle("Megahit CRC Normalised BGC Count") +
+  xlab("Sample Accession") +
+  ylab("Number of BGCs")
+crc_bgc_normal
+ggsave("crc_bgc_normal.png", device = "png")
+
+#2.2. Normal
+#Plot Barchart Reads of Samples (maybe include BGC Reads no. on them)
+normal_reads_non_normal <-ggplot(mega8_count_data, aes(x=NORM_Sample, y=NORM_Reads,fill='blue')) +
+  geom_bar(stat="identity",fill='blue') +
+  geom_text(aes(label=NORM_BGCs), vjust=-0.3, size=3.5)+
+  ggtitle("Megahit Normal Read Count") +
+  xlab("Sample Accession") +
+  ylab("Number of Reads")
+normal_reads_non_normal
+#ggsave("normal_reads_non_normal.png", device = "png")
+#Plot Barchart BGCs of Samples
+normal_bgcs_non_normal <-ggplot(mega8_count_data, aes(x=NORM_Sample, y=NORM_BGCs,fill='blue')) +
+  geom_bar(stat="identity",fill='blue')+
+  geom_text(aes(label=NORM_Reads), vjust=-0.3, size=3.5)+
+  ggtitle("Megahit Normal BGC Count") +
+  xlab("Sample Accession") +
+  ylab("Number of BGCs")
+normal_bgcs_non_normal
+ggsave("normal_bgcs_non_normal.png", device = "png")
+#Plot Barchart BGCs of Samples !Normalised Values!
+normal_bgcs_normal <-ggplot(mega8_count_data, aes(x=NORM_Sample, y=NORM_normalised_BGCs)) +
+  geom_bar(stat="identity",fill='blue') +
+  geom_text(aes(label='10k'), vjust=-0.3, size=3.5)+
+  ggtitle("Megahit Normal Normalised BGC Count") +
+  xlab("Sample Accession") +
+  ylab("Number of BGCs")
+normal_bgcs_normal
+ggsave("normal_bgcs_normal.png", device = "png")
+
+####################!
+#+ Total side by side boxplot (averages?) -> FOR ALL 4 FINAL 4X PAIRED (normalised and non-normalised->2x plots then)
+#Also for read data?
+
+```
+
+```{r}
+#install.packages("ggpubr")
+library(ggpubr)
+
+ggarrange(crc_reads_non_normal, crc_bgc_non_normal, crc_bgc_normal, normal_reads_non_normal, normal_bgcs_non_normal, normal_bgcs_normal + rremove("x.text"), 
+          labels = c("A", "B", "C", "D", "E","F"),
+          ncol = 3, nrow = 3)
+
+ggarrange(crc_bgc_non_normal, normal_bgcs_non_normal, crc_bgc_normal, normal_bgcs_normal + rremove("x.text"), 
+          labels = c("A", "C", "B", "D"),
+          ncol = 2, nrow = 2)
+
+plot_grid(crc_reads_non_normal, crc_bgc_non_normal, crc_bgc_normal, normal_reads_non_normal, normal_bgcs_non_normal, normal_bgcs_normal + rremove("x.text"), 
+          labels = c("A", "B", "C", "D", "E","F"),
+          ncol = 3, nrow = 3)
+
+#http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/81-ggplot2-easy-way-to-mix-multiple-graphs-on-the-same-page/
+```
+
+```{r}
+#TOTALS PLOT: 2V2V2V2(OF ALL)
+#CRCVNORMAL
+```
+
+```{r}
+#Use or no?...
+#Bad data vs? as bars mean nothing ot each other, unless ordered by sized of big to small
+#4. Side by side w/ hand fixed graph
+library(readr)
+graph_mega8_count_data <- read_csv("graph_mega8_count_data.csv")
+g <- graph_mega8_count_data 
+
+#Non-Normalised
+rb <- ggplot(g, aes(x = Sample, y=BGCs, fill=CRC_or_Normal)) +
+  geom_col(data = g, aes(y = BGCs, fill = CRC_or_Normal), 
+              position = position_dodge(preserve = "single"), width =0.8) +
+  scale_y_continuous(breaks = seq(0,200, by = 20), expand=c(0,0)) +
+  scale_fill_manual(values = c("#eb3f36", "#3062e3"), name = "Patient Status") +
+  scale_x_discrete(expand=c(0,0)) +
+   ggtitle("Megahit BGCs Normalised") +
+  xlab("BGC Type") +
+  ylab("BGC Count") +
+  
+theme(
+        #axis.ticks.x = element_blank(),
+        #axis.ticks.y = element_blank(),
+        axis.title.x = element_text(size=10), #, margin = margin(t = -15, r = 0, b = 0, l = 0)),
+        axis.text.x = element_text(angle=45, vjust = 1.05, hjust = -1, size = 1),
+        axis.text.y = element_text(size=7),
+        axis.title.y = element_text(size=10),
+        legend.text = element_text(size=10),
+        legend.key.size = unit(0.8,"line"),
+        legend.title = element_text(size = 12),
+        legend.position = c(0.65,0.9),
+        panel.background = element_blank(),
+        #panel.grid.major.y = element_line(size = 0.3, linetype = 'solid', colour = "white"),
+        panel.ontop = TRUE,
+       ) +
+
+theme(axis.line.x = element_line(color="black", size = 0.25),
+        axis.line.y = element_line(color="black", size = 0.25))
+
+rb
+
+ggsave("rb.png", device = "png")
+
+
+```
+```{r}
+#Normalised comparison in counts
+```
+
+

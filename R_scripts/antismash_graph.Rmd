@@ -1,0 +1,77 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+antismash_bgcs_crc <- read.table(file = 'all10_output.tsv', sep = '\t')
+families_present_crc10 <- antismash_bgcs_crc %>% count(V2)
+#families_present_crc10 <- distinct(data.frame(antismash_bgcs_crc$V2))
+write.table(families_present_crc10, file='crc_10families.tsv', quote=FALSE, sep='\t', col.names = NA)
+pie(families_present_crc10$n, labels = families_present_crc10$V2)
+
+attach(antismash_bgcs_crc)
+
+```
+```{r}
+ordered_families_crc10 <- families_present_crc10 %>% arrange(desc(n))
+ordered_families_crc10
+clean <- ordered_families_crc10 %>% rename(Cluster_type = V2, Cluster_count = n)
+clean
+write.table(clean, file='clean_crc_10families.tsv', quote=FALSE, sep='\t', col.names = NA)
+#get sample avergae in each fil
+```
+
+```{r}
+
+ggplot(data=antismash_bgcs_crc, aes(x=V2, y=1:547)) + 
+  geom_bar(stat = "identity")
+```
+
+
+#ggplot(data = antismash_bgcs_crc, aes(x = "", y = antismash_bgcs_crc$n, fill = V2)) + 
+  #geom_bar(stat = "identity") + 
+#  coord_polar("y")
+
+ggplot(data = antismash_bgcs_crc, aes(x = "", y ='n', 
+                           fill=V2 )) + 
+  geom_bar(stat = "identity") + 
+  labs(title = "CRC Samples 10x BGCs present and quantitiy") +
+  coord_polar("y") +
+  theme_void()
+
+# Barplot
+bp <- ggplot(antismash_bgcs_crc, aes(x="", y='n', fill=V2))+
+geom_bar(width = 1, stat = "identity")
+bp
+pie <- bp + coord_polar("y", start=0)
+pie
+
+# Basic box plot from data frame
+#qplot('V2', 'n', data = antismash_bgcs_crc, 
+#      geom= "boxplot", fill = V2)
+
+#ggplot(data = antismash_bgcs_crc, aes(x='V2', y=seq(1, 100, by=2), fill='n')) + 
+ #   geom_boxplot()
+
+# Violin plot
+#qplot(sex, weight, data = wdata, geom = "violin")
+# Dot plot
+#qplot(sex, weight, data = wdata, geom = "dotplot",
+#      stackdir = "center", binaxis = "y", dotsize = 0.5)
+
+
+# Plot the bar chart 
+#barplot(antismash_bgcs_crc$n, lab="BGC",ylab="Quantity Detected",col="blue",
+#main="CRC BGC chart",border="black")
+
+ggplot(antismash_bgcs_crc, aes(x=V2, y=n)) + 
+  geom_bar(stat = "identity")
+#ax = antismash_bgcs_crc.plot.bar(x='V2', y='n', rot=0)
+
+#barplo
+

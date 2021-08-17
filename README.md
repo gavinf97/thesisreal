@@ -1,6 +1,6 @@
 # Thesis Github: Gavin Farrell
-## Updated: 15/8/21 
-## Status; being updated, to be complete before 17/8/21
+## Updated: 17/8/21 
+## Status; being updated and cleaned -> code needs commenting, clear clutter
 -> Contact g.farrell13@nuigalway.ie for any specific files or details before then
 
 
@@ -16,7 +16,7 @@
 #### Requires updating as mix of conda environment and singularity (docker base) container used for pipelines
 <br />
 
-### 0.3. List of tools used
+### 0.3. List of tools used (unavailable)
 <br />
 
 ## 1. Primary Processing Pipelines:
@@ -33,7 +33,7 @@
 ## 3. Python - File Parsing (available)
 <br />
 
-## 4. R - Graphing Data (unavailable)
+## 4. R - Graphing Data (available)
 
 
 

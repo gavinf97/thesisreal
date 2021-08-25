@@ -36,6 +36,7 @@ NF-core Fetch NGS;<br />
 https://nf-co.re/fetchngs
 <br />
 
+(.jpg files display the tools used in the pipelines and methods undertaken to process the data)
 ## 2. Bash - File Management (available)
 Bash scripts were used to take output BGC data from Nextflow Megahit and MetaSpades pipelines and perform QC and merging steps.
 <br />

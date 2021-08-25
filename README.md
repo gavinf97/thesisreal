@@ -1,6 +1,6 @@
 # Thesis Github: Gavin Farrell
 ## Updated: 17/8/21 
-## Status; being updated and cleaned -> code needs commenting, clear clutter
+## Status; being updated and cleaned 
 -> Contact g.farrell13@nuigalway.ie for any specific files or details before then
 
 

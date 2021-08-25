@@ -16,7 +16,7 @@ Avaiable on ENA at: https://www.ebi.ac.uk/ena/browser/view/PRJEB12449?show=reads
 <br />
 
 ### 0.2. Dockerhub container used at: https://hub.docker.com/repository/docker/gfarrell/allin
-#### Requires updating as mix of conda environment and singularity (docker base) container used for pipelines
+Requires updating as mix of Conda environment and Singularity (docker base) container used for pipelines
 <br />
 
 ### 0.3. List of tools used (unavailable)

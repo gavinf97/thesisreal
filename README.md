@@ -11,8 +11,8 @@ Given the known dysbiosis of the colorectal gut microbiome in colorectal cancer 
 
 ## 0. Additional files
 ### 0.1. Sample Accessions and Status
-Avaiable on ENA at: https://www.ebi.ac.uk/ena/browser/view/PRJEB12449?show=reads
-Accession: PRJEB12449
+Avaiable on ENA at: https://www.ebi.ac.uk/ena/browser/view/PRJEB12449?show=reads <br />
+****Accession****: PRJEB12449
 <br />
 
 ### 0.2. Dockerhub container used at: https://hub.docker.com/repository/docker/gfarrell/allin

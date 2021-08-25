@@ -30,7 +30,7 @@ Test pipeline for initial decision of which pipeline development tool to use. Di
 ### Nextflow: Megahit Pipeline (available)
 Pipeline assembled contigs using Megahit and direct ENA accession downloads for input samples.
 ### Nextflow: MetaSpades Pipeline (available)
-Later stage pipelines. Switched from direct ENA downloads to using nf-core pipeline 'Fetch NGS' to downlaoad data first. Then used Biosynthetic MetaSpades to form contigs and extend contigs into larger scaffolds, better for large BGC retrieval.
+Later stage pipelines. Switched from direct ENA downloads to using nf-core pipeline 'Fetch NGS' to download data first. Then used Biosynthetic MetaSpades to form contigs and extend contigs into larger scaffolds, better for large BGC retrieval.
 
 NF-core Fetch NGS;<br />
 https://nf-co.re/fetchngs

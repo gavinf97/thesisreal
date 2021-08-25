@@ -5,6 +5,9 @@
 
 
 ## Title: Is the a Loss of BGC Diveristy in Colorectal Microbiome
+### Description
+Given the known dysbiosis of the colorectal gut microbiome in colorectal cancer patients when compared to normal controls, this thesis aimed to determine if there was a further correlation to the number and types of biosynthetic gene clusters (BGC) present in the microbes of the gut microbiome between colorectal cancer patients and normal controls. Data used was short read 100 bp paired end reads. Data was assembled into contigs with Megahit and MetaSpades, and searched for BGC using AntiSMASH and Biosynthetic MetaSpades. Further analsysis and data interpreatation was done using Bash, Python and R scripts.
+
 
 ## 0. Additional files
 ### 0.1. Sample Accessions and Status

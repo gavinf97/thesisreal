@@ -24,19 +24,27 @@ Requires updating as mix of Conda environment and Singularity (docker base) cont
 
 ## 1. Primary Processing Pipelines:
 ### Snakemake: Test Pipeline (available)
+Test pipeline for initial decision of which pipeline development tool to use. Discontinued early into the project as Nextflow had more suited functionality and suitability to the project demands over Snakemake.
 <br />
 
 ### Nextflow: Megahit Pipeline (available)
+Pipeline assembled contigs using Megahit and direct ENA accession downloads for input samples.
 ### Nextflow: MetaSpades Pipeline (available)
+Later stage pipelines. Switched from direct ENA downloads to using nf-core pipeline 'Fetch NGS' to downlaod data first.
+
+https://nf-co.re/fetchngs
 <br />
 
 ## 2. Bash - File Management (available)
+Bash scripts were used to take output BGC data from Nextflow Megahit and MetaSpades pipelines and perform QC and merging steps.
 <br />
 
 ## 3. Python - File Parsing (available)
+Merged BGC data was parsed using Python into basic tsv/csv files for use in R.
 <br />
 
 ## 4. R - Graphing Data (available)
+R scripts took basic Python parsed data files and cleaned up csv/tsv files. File data was then normalised and graphed for interpretation and determination of gut microbiome BGC correlation to colorectal cancer.
 
 
 

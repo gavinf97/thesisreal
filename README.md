@@ -3,6 +3,8 @@
 ## Status; being updated and cleaned -> Github Pages will be set up for ease of access + Github Wiki
 -> Contact g.farrell13@nuigalway.ie for any specific files or details before then
 
+Certain aspects of the project are also being broken down into their own repositories for ease for access <br/>
+eg: Netflow primary processing pipelines
 
 ## Title: Is the a Loss of BGC Diveristy in Colorectal Microbiome
 ### Description

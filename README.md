@@ -4,7 +4,7 @@
 -> Contact g.farrell13@nuigalway.ie for any specific files or details before then
 
 Certain aspects of the project are also being broken down into their own repositories for ease for access <br/>
-eg: Nextflow primary processing pipelines: ****https://github.com/gavinf97/Nextflow_AntiSMASH****
+****eg:**** Nextflow primary processing pipelines: ****https://github.com/gavinf97/Nextflow_AntiSMASH****
 
 ## Title: Is the a Loss of BGC Diveristy in Colorectal Microbiome
 ### Description
